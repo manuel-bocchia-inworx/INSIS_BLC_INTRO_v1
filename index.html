@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Capacitación BLC — Billing and Collection | INSIS</title>
+<meta name="description" content="Curso interactivo de reconstrucción de la capacitación del módulo BLC (Billing and Collection) de INSIS, basado en el modelo de datos INSIS_GEN_BLC_V10.">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<header class="topbar">
+  <button class="hamburger" id="menuToggle" aria-expanded="false" aria-controls="sidebar" aria-label="Abrir menú de navegación">&#9776;</button>
+  <b>Capacitación BLC</b>
+  <div class="progress-track"><div class="progress-fill" id="progressFillTop"></div></div>
+  <span id="progressPctTop">0%</span>
+</header>
+
+<div class="backdrop" id="backdrop"></div>
+
+<div class="layout">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">BLC</div>
+      <div class="brand-text">
+        <strong>Capacitación BLC</strong>
+        <span>Billing and Collection · INSIS</span>
+      </div>
+    </div>
+
+    <p class="sidebar-meta">
+      Reconstrucción de la capacitación grabada, validada contra el modelo de datos
+      <code>INSIS_GEN_BLC_V10</code> (250 páginas).
+    </p>
+
+    <div class="progress-box">
+      <div class="progress-head">
+        <span>Tu avance</span>
+        <b id="progressPct">0%</b>
+      </div>
+      <div class="progress-track" id="progressBar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Progreso del curso">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <p class="progress-note" id="progressCount">0 secciones</p>
+      <p class="progress-note" id="quizBadge">Examen pendiente</p>
+    </div>
+
+    <p class="nav-title">Contenido del curso</p>
+    <ul class="nav" id="nav"></ul>
+
+    <div class="sidebar-actions">
+      <button class="btn btn-ghost-dark" id="resetAll" type="button">Reiniciar progreso</button>
+    </div>
+  </aside>
+
+  <!-- ============ CONTENIDO ============ -->
+  <main class="content" id="main">
+
+    <div class="hero">
+      <p class="eyebrow">Curso técnico-funcional</p>
+      <h1>Módulo BLC: cómo INSIS convierte un contrato en dinero</h1>
+      <p>
+        Este curso reconstruye, parte por parte, la capacitación grabada del módulo de
+        <b>Billing and Collection</b>, dándole sentido y contexto sobre el modelo de datos real.
+        Cada afirmación está anclada a tablas y columnas verificables, y cada bloque indica su
+        nivel de confianza y su fuente.
+      </p>
+      <div class="hero-facts">
+        <span class="fact">19 unidades + 3 anexos</span>
+        <span class="fact">Modelo de 250 páginas</span>
+        <span class="fact">Schema <code>INSIS_GEN_BLC_V10</code></span>
+        <span class="fact">Examen de 24 preguntas</span>
+        <span class="fact">Duración estimada: 3 a 4 h</span>
+      </div>
+    </div>
+
+    <div class="wrap">
+
+      <!-- ===== 1 ===== -->
+      <section class="section" id="s1" data-nav-label="1. Resumen ejecutivo">
+        <div class="section-head">
+          <div class="section-num">1</div>
+          <h2><span class="kicker">Unidad 1</span>Resumen ejecutivo</h2>
+        </div>
+
+        <div class="goals">
+          <strong>Al terminar esta unidad vas a poder</strong>
+          <ul>
+            <li>Explicar en una frase qué hace el módulo BLC.</li>
+            <li>Enumerar la cadena de objetos que une contrato y dinero.</li>
+            <li>Entender el criterio de reconstrucción y cómo leer las marcas de confianza.</li>
+          </ul>
+        </div>
+
+        <p>
+          BLC es el módulo que traduce <b>acuerdos comerciales</b> en <b>obligaciones financieras</b>,
+          y esas obligaciones en <b>movimientos de dinero verificables</b>. Toda póliza, endoso,
+          comisión, siniestro o impuesto que tenga consecuencia económica termina expresándose en
+          las estructuras de BLC.
+        </p>
+
+        <p>La cadena canónica del módulo, que se repite en todos los escenarios, es:</p>
+
+        <div class="rel-list">
+          <div class="rel">
+            <span>BLC_ACCOUNTS / BLC_ITEMS</span><span class="arrow">&rarr;</span>
+            <span>BLC_INSTALLMENTS</span><span class="arrow">&rarr;</span>
+            <span>BLC_TRANSACTIONS</span>
+            <span class="note">de quién y por qué &rarr; cuánto y cuándo &rarr; deuda formal</span>
+          </div>
+          <div class="rel">
+            <span>BLC_DOCUMENTS</span><span class="arrow">&rarr;</span>
+            <span>BLC_APPLICATIONS</span><span class="arrow">&harr;</span>
+            <span>BLC_PAYMENTS</span>
+            <span class="note">documento &rarr; imputación &harr; dinero</span>
+          </div>
+          <div class="rel">
+            <span>BLC_CLEARINGS</span><span class="arrow">&rarr;</span>
+            <span>BLC_SLA_EVENTS</span><span class="arrow">&rarr;</span>
+            <span>BLC_GL_INSIS2GL</span>
+            <span class="note">confirmación bancaria &rarr; contabilidad</span>
+          </div>
+        </div>
+
+        <div class="callout key">
+          <span class="label">Idea central del curso</span>
+          <p>
+            No se analiza BLC leyendo una tabla suelta. Se analiza <b>recorriendo la cadena</b>.
+            Cada eslabón responde una pregunta distinta y ninguno reemplaza al anterior.
+          </p>
+        </div>
+
+        <h3>Cómo leer las marcas de confianza</h3>
+        <p>Cada afirmación del curso está clasificada según la evidencia que la respalda:</p>
+        <div class="chips">
+          <span class="chip"><span class="badge alto">ALTO</span> verificado directamente contra el modelo de datos.</span>
+          <span class="chip"><span class="badge medio">MEDIO</span> inferido del modelo con respaldo parcial.</span>
+          <span class="chip"><span class="badge bajo">BAJO</span> depende de configuración o requiere confirmación funcional.</span>
+        </div>
+
+        <div class="checkpoint">
+          <strong>Comprobá tu comprensión</strong>
+          <ol>
+            <li>¿Qué diferencia hay entre una obligación financiera y un movimiento de dinero?</li>
+            <li>Nombrá los nueve objetos de la cadena canónica en orden.</li>
+          </ol>
+        </div>
+
+        <span class="cite"><b>Fuentes:</b> <code>transcription.txt</code> (capacitación grabada) · modelo de datos <code>Billing_and_Collection_Data_Model.pdf</code> · reglas operativas del <code>agent-bundle</code>.</span>
+      </section>
+
+      <!-- ===== 2 ===== -->
+      <section class="section" id="s2" data-nav-label="2. Alcance y fuentes">
+        <div class="section-head">
+          <div class="section-num">2</div>
+          <h2><span class="kicker">Unidad 2</span>Alcance, fuentes y método</h2>
+        </div>
+
+        <div class="goals">
+          <strong>Al terminar esta unidad vas a poder</strong>
+          <ul>
+            <li>Distinguir qué parte del curso viene de la grabación y qué parte del modelo.</li>
+            <li>Aplicar el criterio de resolución de contradicciones.</li>
+          </ul>
+        </div>
+
+        <h3>2.1 Fuentes utilizadas</h3>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Fuente</th><th>Aporte</th><th>Limitación</th></tr></thead>
+            <tbody>
+              <tr><td>Transcripción de la capacitación</td><td>Narrativa, orden de explicación, énfasis del capacitador</td><td>Lenguaje oral, términos incompletos o fonéticamente alterados</td></tr>
+              <tr><td>Modelo de datos BLC (250 pág.)</td><td>Tablas, columnas, dominios, claves foráneas</td><td>No explica intención de negocio ni configuración del cliente</td></tr>
+              <tr><td>Reglas del <code>agent-bundle</code></td><td>Guardrails de consulta y seguridad</td><td>No aporta contenido funcional</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>2.2 Criterio de reconstrucción</h3>
+        <ul>
+          <li>La transcripción aporta el <b>hilo narrativo</b>; el modelo aporta la <b>verdad estructural</b>.</li>
+          <li>Ante contradicción, <b>gana el modelo de datos</b>. Los datos ganan sobre las specs.</li>
+          <li>Todo término dudoso de la grabación se mapea a su equivalente real (ver Anexo B).</li>
+          <li>Lo que no pudo verificarse no se afirma: se traslada a Preguntas abiertas (unidad 17).</li>
+        </ul>
+
+        <h3>2.3 Qué queda fuera de alcance</h3>
+        <div class="callout warn">
+          <span class="label">Fuera de alcance</span>
+          <p>
+            Parametrización específica del cliente, reglas contables concretas por ledger, y
+            cualquier valor de datos productivos. El acceso a base es <b>solo lectura</b> y en este
+            trabajo no hubo conexión Oracle activa, por lo que el material es documental.
+          </p>
+        </div>
+
+        <div class="checkpoint">
+          <strong>Comprobá tu comprensión</strong>
+          <ol>
+            <li>La grabación dice una cosa y el modelo otra. ¿Cuál prevalece y por qué?</li>
+          </ol>
+        </div>
+
+        <span class="cite"><b>Fuentes:</b> <code>transcription.txt</code> · modelo de datos BLC · skill <code>project-investigation-method</code>.</span>
+      </section>
+
+      <!-- ===== 3 ===== -->
+      <section class="section" id="s3" data-nav-label="3. Qué problema resuelve">
+        <div class="section-head">
+          <div class="section-num">3</div>
+          <h2><span class="kicker">Unidad 3</span>Qué problema resuelve BLC</h2>
+        </div>
+
+        <div class="goals">
+          <strong>Al terminar esta unidad vas a poder</strong>
+          <ul>
+            <li>Justificar por qué el módulo necesita tantos objetos distintos.</li>
+            <li>Identificar las cuatro preguntas de negocio que BLC debe responder.</li>
+          </ul>
+        </div>
+
+        <p>Un sistema de seguros debe poder responder, en cualquier momento y con evidencia:</p>
+
+        <div class="cards">
+          <div class="card"><h5>¿Cuánto se debe?</h5><p>Importe pendiente por contrato, por parte y por fecha de vencimiento.</p></div>
+          <div class="card"><h5>¿Quién lo debe?</h5><p>Qué parte, bajo qué rol y sobre qué cuenta financiera.</p></div>
+          <div class="card"><h5>¿Qué se cobró realmente?</h5><p>Dinero recibido, confirmado por el banco e imputado correctamente.</p></div>
+          <div class="card"><h5>¿Cómo impacta en contabilidad?</h5><p>Qué eventos se generaron y qué asientos llegaron al libro mayor.</p></div>
+        </div>
+
+        <div class="callout info">
+          <span class="label">Por qué tantas tablas</span>
+          <p>
+            Cada pregunta anterior tiene un ciclo de vida propio y puede cambiar sin que cambien las
+            demás. Un importe puede modificarse por un endoso sin que el dinero se mueva; un pago
+            puede recibirse sin estar aún imputado; un asiento puede fallar sin afectar el cobro.
+            Separar los objetos es lo que permite auditar cada capa de forma independiente.
+          </p>
+        </div>
+
+        <div class="checkpoint">
+          <strong>Comprobá tu comprensión</strong>
+          <ol>
+            <li>Dé un ejemplo donde cambie la obligación pero no el dinero.</li>
+            <li>Dé un ejemplo donde entre dinero pero no se cancele ninguna deuda.</li>
+          </ol>
+        </div>
+
+        <span class="cite"><b>Fuentes:</b> <code>transcription.txt</code> (introducción del capacitador) · modelo de datos BLC, visión general del módulo.</span>
+      </section>
+
+      <!-- ===== 4 ===== -->
+      <section class="section" id="s4" data-nav-label="4. Conceptos base">
+        <div class="section-head">
+          <div class="section-num">4</div>
+          <h2><span class="kicker">Unidad 4</span>Conceptos base del modelo</h2>
+        </div>
+
+        <div class="goals">
+          <strong>Al terminar esta unidad vas a poder</strong>
+          <ul>
+            <li>Definir account, item e installment y diferenciarlos sin ambigüedad.</li>
+            <li>Interpretar la clase de installment y el significado del signo.</li>
+          </ul>
+        </div>
+
+        <h3>4.1 <code>BLC_ACCOUNTS</code> — la cuenta financiera <span class="badge alto">ALTO</span></h3>
+        <p>
+          Representa la cuenta de una parte bajo un rol determinado: cliente, agente, reasegurador,
+          proveedor. Una misma persona jurídica puede tener varias cuentas si actúa con roles
+          distintos. La cuenta define cómo se le factura, cómo se le cobra y cómo se le paga.
+        </p>
+        <ul>
+          <li><code>ACCOUNT_ID</code>: identificador único.</li>
+          <li><code>PARTY</code> y rol asociado: quién es y en qué carácter participa.</li>
+          <li>Atributos de perfil: moneda, método de pago, condiciones y datos bancarios.</li>
+        </ul>
+
+        <h3>4.2 <code>BLC_ITEMS</code> — el motivo financiero <span class="badge alto">ALTO</span></h3>
+        <p>
+          Un billing item es el <b>acuerdo concreto</b> que se factura o se paga. No es la póliza en
+          sentido comercial: es el objeto financiero asociado a ella. Se identifica funcionalmente
+          por hasta cuatro atributos, de los cuales los dos primeros son obligatorios:
+        </p>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Atributo</th><th>Significado</th></tr></thead>
+            <tbody>
+              <tr><td><code>SOURCE</code></td><td>Sistema o subsistema de origen del acuerdo</td></tr>
+              <tr><td><code>AGREEMENT</code></td><td>Identificador del acuerdo, típicamente la póliza o contrato</td></tr>
+              <tr><td><code>COMPONENT</code></td><td>Componente dentro del acuerdo, por ejemplo una cobertura</td></tr>
+              <tr><td><code>DETAIL</code></td><td>Nivel de detalle adicional cuando se requiere</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          El tipo de item (<code>ITEM_TYPE</code>) distingue póliza, comisión, siniestro y reaseguro,
+          entre otros. Por eso una misma póliza genera <b>varios items</b>.
+        </p>
+
+        <h3>4.3 <code>BLC_INSTALLMENTS</code> — cuánto y cuándo <span class="badge alto">ALTO</span></h3>
+        <p>
+          Es el mayor nivel de detalle financiero: el importe a cobrar o pagar en una fecha
+          determinada, asociado a un item y a una cuenta. Guarda además referencias de origen que
+          son clave para la trazabilidad.
+        </p>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Columna</th><th>Para qué sirve</th></tr></thead>
+            <tbody>
+              <tr><td><code>INSTALLMENT_ID</code></td><td>Identificador único del importe</td></tr>
+              <tr><td><code>ITEM_ID</code> / <code>ACCOUNT_ID</code></td><td>Motivo y titular del importe</td></tr>
+              <tr><td><code>INSTALLMENT_DATE</code> / <code>DUE_DATE</code></td><td>Fecha de generación y de vencimiento</td></tr>
+              <tr><td><code>AMOUNT</code> / <code>CURRENCY</code></td><td>Importe y moneda original</td></tr>
+              <tr><td><code>INSTALLMENT_CLASS</code> / <code>INSTALLMENT_TYPE</code></td><td>Naturaleza del importe y su tipo de catálogo</td></tr>
+              <tr><td><code>ANNEX</code></td><td>Endoso que originó o modificó el importe</td></tr>
+              <tr><td><code>TRANSACTION_ID</code></td><td>Transaction en la que se materializó, si ya ocurrió</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>4.4 Clases de installment <span class="badge alto">ALTO</span></h3>
+        <div class="chips">
+          <span class="chip"><b>B</b> Bill — se factura y se cobra</span>
+          <span class="chip"><b>D</b> Deposit — depósito solicitado</span>
+          <span class="chip"><b>P</b> Pay — importe a pagar</span>
+          <span class="chip"><b>A</b> Advance — anticipo</span>
+          <span class="chip"><b>R</b> Revenue — solo reconocimiento de ingreso</span>
+          <span class="chip"><b>E</b> Expense — solo reconocimiento de gasto</span>
+        </div>
+        <div class="callout warn">
+          <span class="label">Error frecuente</span>
+          <p>
+            Confundir clase <code>B</code> con clase <code>R</code>. La primera genera una obligación
+            de cobro real; la segunda existe con fines contables y <b>nunca se factura</b>. Sumar ambas
+            como “deuda” infla el resultado.
+          </p>
+        </div>
+
+        <h3>4.5 El signo del importe <span class="badge alto">ALTO</span></h3>
+        <p>
+          El signo no es decorativo: expresa dirección financiera. Un importe negativo puede
+          significar una reversa, un crédito a favor o una devolución pendiente. La interpretación
+          correcta depende siempre de la combinación <b>signo + clase + tipo</b>, nunca del signo aislado.
+        </p>
+
+        <div class="checkpoint">
+          <strong>Comprobá tu comprensión</strong>
+          <ol>
+            <li>¿Por qué una misma persona puede tener más de una account?</li>
+            <li>¿Qué información se pierde si se busca por póliza en lugar de por item?</li>
+            <li>¿Qué diferencia operativa hay entre clase <code>B</code> y clase <code>R</code>?</li>
+          </ol>
+        </div>
+
+        <span class="cite"><b>Fuentes:</b> modelo de datos BLC — <code>BLC_ACCOUNTS</code> (pág. 2-9), <code>BLC_ITEMS</code> (pág. 92-98), <code>BLC_INSTALLMENTS</code> (pág. 83-91).</span>
+      </section>
+
+      <!-- ===== 5 ===== -->
+      <section class="section" id="s5" data-nav-label="5. Cadena operativa">
+        <div class="section-head">
+          <div class="section-num">5</div>
+          <h2><span class="kicker">Unidad 5</span>La cadena operativa, paso a paso</h2>
+        </div>
+
+        <div class="goals">
+          <strong>Al terminar esta unidad vas a poder</strong>
+          <ul>
+            <li>Recorrer la cadena completa en ambos sentidos.</li>
+            <li>Saber qué tabla responde cada pregunta de negocio.</li>
+          </ul>
+        </div>
+
+        <p>Esta es la columna vertebral del módulo. Cada paso tiene una función irreemplazable:</p>
+
+        <div class="chain">
+          <div class="chain-step">
+            <div>
+              <h5>BLC_ACCOUNTS</h5>
+              <p>Define <b>de quién</b> es la relación financiera y bajo qué rol. Sin cuenta no hay titular.</p>
+            </div>
+          </div>
+          <div class="chain-step">
+            <div>
+              <h5>BLC_ITEMS</h5>
+              <p>Define <b>por qué</b> existe el movimiento: prima, comisión, siniestro o reaseguro. Una póliza genera varios items.</p>
+            </div>
+          </div>
+          <div class="chain-step">
+            <div>
+              <h5>BLC_INSTALLMENTS</h5>
+              <p>Define <b>cuánto y cuándo</b>. Es una instrucción financiera, todavía no es deuda formal.</p>
+            </div>
+          </div>
+          <div class="chain-step">
+            <div>
+              <h5>BLC_TRANSACTIONS</h5>
+              <p>Convierte el importe en <b>receivable o payable</b> con saldo propio: <code>OPEN_BALANCE</code>, <code>ACTUAL_OPEN_BALANCE</code> y <code>PAID_STATUS</code>.</p>
+            </div>
+          </div>
+          <div class="chain-step">
+            <div>
+              <h5>BLC_DOCUMENTS</h5>
+              <p>Agrupa transactions en un objeto formal: factura, nota, solicitud de pago o recibo. Un documento puede contener varias transactions.</p>
+            </div>
+          </div>
+          <div class="chain-step is-money">
+            <div>
+              <h5>BLC_PAYMENTS</h5>
+              <p><b>Dinero real</b>, entrante o saliente. Existe aunque todavía no se sepa a qué imputarlo.</p>
+            </div>
+          </div>
+          <div class="chain-step is-money">
+            <div>
+              <h5>BLC_APPLICATIONS</h5>
+              <p>El puente: explica <b>cómo</b> un pago o crédito se imputa a una transaction, item, cuenta o actividad.</p>
+            </div>
+          </div>
+          <div class="chain-step is-money">
+            <div>
+              <h5>BLC_CLEARINGS</h5>
+              <p>Confirmación bancaria de que los fondos efectivamente se movieron.</p>
+            </div>
+          </div>
+          <div class="chain-step is-gl">
+            <div>
+              <h5>BLC_SLA_EVENTS &rarr; BLC_GL_INSIS2GL</h5>
+              <p>Traduce los hechos financieros en eventos contables y finalmente en líneas de asiento para el libro mayor.</p>
+            </div>
+          </div>
+        </div>
+
+        <h3>Parte 4 en detalle: por qué la transaction es el eje <span class="badge alto">ALTO</span></h3>
+        <p>
+          La transaction es donde vive el saldo. Distingue dos medidas que no significan lo mismo:
+        </p>
+        <div class="cards">
+          <div class="card"><h5><span class="tag">OPEN_BALANCE</span></h5><p>Saldo pendiente considerando pagos aplicados, estén o no confirmados por el banco.</p></div>
+          <div class="card"><h5><span class="tag">ACTUAL_OPEN_BALANCE</span></h5><p>Saldo pendiente considerando <b>solo</b> pagos ya cleared. Es la visión conservadora.</p></div>
+        </div>
+        <div class="callout info">
+          <span class="label">Interpretación</span>
+          <p>Una diferencia entre ambos saldos no es un error: indica dinero aplicado pero aún no confirmado bancariamente.</p>
+        </div>
+
+        <h3>Parte 6 en detalle: la aplicación <span class="badge alto">ALTO</span></h3>
+        <p>Es el objeto más importante para auditar. Sus referencias principales:</p>
+        <div class="rel-list">
+          <div class="rel"><span>BLC_APPLICATIONS.SOURCE_PAYMENT</span><span class="arrow">&rarr;</span><span>BLC_PAYMENTS.PAYMENT_ID</span><span class="note">de dónde salió el dinero</span></div>
+          <div class="rel"><span>BLC_APPLICATIONS.TARGET_TRX</span><span class="arrow">&rarr;</span><span>BLC_TRANSACTIONS.TRANSACTION_ID</span><span class="note">qué deuda cancela</span></div>
+          <div class="rel"><span>BLC_APPLICATIONS.TARGET_ITEM</span><span class="arrow">&rarr;</span><span>BLC_ITEMS.ITEM_ID</span><span class="note">imputación a nivel item</span></div>
+          <div class="rel"><span>BLC_APPLICATIONS.REVERSED_APPL</span><span class="arrow">&rarr;</span><span>BLC_APPLICATIONS.APPLICATION_ID</span><span class="note">reversión de una aplicación previa</span></div>
+        </div>
+        <p>
+          Las clases de aplicación más frecuentes son <code>PMNT_ON_TRANSACTION</code> (pago sobre
+          transaction), <code>RCPT_ON_ACCOUNT</code> (cobro a cuenta), <code>CREDIT_ON_TRANSACTION</code>
+          (crédito sobre transaction) y <code>TRX_ON_ACTIVITY</code> (imputación a una actividad, como un refund).
+        </p>
+
+        <div class="checkpoint">
+          <strong>Comprobá tu comprensión</strong>
+          <ol>
+            <li>¿Qué tabla consultás para saber si un cliente pagó realmente?</li>
+            <li>¿Qué tabla consultás para saber cuánto debería haber pagado?</li>
+            <li>¿Qué significa que un documento tenga dos transactions de signo opuesto?</li>
+          </ol>
+        </div>
+
+        <span class="cite"><b>Fuentes:</b> modelo de datos BLC — <code>BLC_TRANSACTIONS</code> (pág. 237-245), <code>BLC_DOCUMENTS</code> (pág. 62-69), <code>BLC_APPLICATIONS</code> (pág. 16-23), <code>BLC_PAYMENTS</code> (pág. 140-152).</span>
+      </section>
+
+      <!-- ===== 6 ===== -->
+      <section class="section" id="s6" data-nav-label="6. Pagos, saldos y estados">
+        <div class="section-head">
+          <div class="section-num">6</div>
+          <h2><span class="kicker">Unidad 6</span>Pagos, saldos y estados</h2>
+        </div>
+
+        <div class="goals">
+          <strong>Al terminar esta unidad vas a poder</strong>
+          <ul>
+            <li>Leer correctamente los estados de transaction y de payment.</li>
+            <li>Interpretar saldos negativos y pagos parcialmente aplicados.</li>
+          </ul>
+        </div>
+
+        <h3>6.1 Saldos y su signo <span class="badge alto">ALTO</span></h3>
+        <p>
+          Un <code>OPEN_BALANCE</code> negativo representa un <b>crédito</b>: reversa, exceso de pago o
+          importe potencialmente reintegrable. No significa que la devolución se haya ejecutado.
+        </p>
+
+        <h3>6.2 Estados de la transaction <span class="badge alto">ALTO</span></h3>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Columna</th><th>Valor</th><th>Significado</th></tr></thead>
+            <tbody>
+              <tr><td rowspan="3"><code>PAID_STATUS</code></td><td><code>N</code></td><td>No pagado</td></tr>
+              <tr><td><code>P</code></td><td>Parcialmente pagado</td></tr>
+              <tr><td><code>Y</code></td><td>Pagado</td></tr>
+              <tr><td rowspan="2"><code>TRANSACTION_CLASS</code></td><td><code>B</code> / <code>D</code> / <code>A</code></td><td>Bill, deposit, advance</td></tr>
+              <tr><td><code>P</code> / <code>N</code> / <code>X</code></td><td>Payable, nota, bill exchange</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout danger">
+          <span class="label">Ambigüedad peligrosa</span>
+          <p>
+            La letra <code>P</code> significa <b>parcialmente pagado</b> en <code>PAID_STATUS</code>,
+            pero <b>payable</b> en <code>TRANSACTION_CLASS</code>. Siempre hay que mirar la columna,
+            no la letra.
+          </p>
+        </div>
+
+        <h3>6.3 Estados del payment <span class="badge alto">ALTO</span></h3>
+        <ul>
+          <li><code>APPLIED_STATUS</code>: <code>N</code> sin aplicar, <code>P</code> parcialmente aplicado, <code>Y</code> totalmente aplicado.</li>
+          <li><code>OPEN_BALANCE</code> del payment: importe todavía disponible para imputar.</li>
+          <li>Un pago puede existir, estar cleared y aun así no haber cancelado ninguna deuda.</li>
+        </ul>
+
+        <h3>6.4 Reversiones <span class="badge alto">ALTO</span></h3>
+        <p>
+          BLC no borra historia. Una reversión se registra como un movimiento espejo de signo
+          opuesto que referencia al original. Esto permite reconstruir el estado en cualquier
+          momento del tiempo, pero obliga a sumar con cuidado: sumar todo sin considerar reversas
+          duplica importes.
+        </p>
+
+        <div class="checkpoint">
+          <strong>Comprobá tu comprensión</strong>
+          <ol>
+            <li>Un payment tiene <code>APPLIED_STATUS = 'P'</code>. ¿Qué acción operativa corresponde?</li>
+            <li>¿Por qué un saldo negativo no equivale a una devolución realizada?</li>
+          </ol>
+        </div>
+
+        <span class="cite"><b>Fuentes:</b> modelo de datos BLC — <code>BLC_TRANSACTIONS</code> (pág. 241-243), <code>BLC_PAYMENTS</code> (pág. 144-147), <code>BLC_APPLICATIONS</code> (pág. 21).</span>
+      </section>
+
+      <!-- ===== 7 ===== -->
+      <section class="section" id="s7" data-nav-label="7. Ejemplos reconstruidos">
+        <div class="section-head">
+          <div class="section-num">7</div>
+          <h2><span class="kicker">Unidad 7</span>Ejemplos reconstruidos extremo a extremo</h2>
+        </div>
+
+        <div class="goals">
+          <strong>Al terminar esta unidad vas a poder</strong>
+          <ul>
+            <li>Seguir cuatro escenarios reales a través de toda la cadena.</li>
+            <li>Anticipar qué registros esperar en cada tabla.</li>
+          </ul>
+        </div>
+
+        <h3>7.1 Cobro de prima <span class="badge alto">ALTO</span></h3>
+        <ol>
+          <li>La póliza genera un item de tipo policy sobre la cuenta del cliente.</li>
+          <li>El plan de pagos genera installments clase <code>B</code>, uno por vencimiento.</li>
+          <li>Cada installment se convierte en transaction receivable con su saldo.</li>
+          <li>Las transactions se agrupan en un documento de factura.</li>
+          <li>El cliente paga: se registra un payment incoming.</li>
+          <li>Una application <code>PMNT_ON_TRANSACTION</code> imputa el pago y reduce el saldo.</li>
+          <li>El clearing confirma los fondos y los SLA events generan el asiento.</li>
+        </ol>
+
+        <h3>7.2 Cancelación o endoso con devolución <span class="badge medio">MEDIO</span></h3>
+        <p>
+          El endoso genera nuevos installments, típicamente de signo negativo, referenciando el
+          <code>ANNEX</code> correspondiente. Se produce una transaction que reversa total o
+          parcialmente la obligación previa y deja un saldo negativo. Ese crédito puede aplicarse a
+          otra deuda o derivar en un payment outgoing de devolución.
+        </p>
+        <div class="callout warn">
+          <span class="label">Atención</span>
+          <p>El detalle exacto depende de la parametrización del cliente: no todos los endosos producen la misma cantidad de movimientos.</p>
+        </div>
+
+        <h3>7.3 Pago de siniestro <span class="badge alto">ALTO</span></h3>
+        <ol>
+          <li>El siniestro confirmado genera un item de tipo claim.</li>
+          <li>Se generan installments clase <code>P</code> (a pagar) sobre la cuenta del beneficiario.</li>
+          <li>Se crea una transaction payable y un documento de solicitud de pago.</li>
+          <li>El pay run selecciona el importe y genera un payment outgoing.</li>
+          <li>La application imputa el pago contra la transaction y el clearing lo confirma.</li>
+        </ol>
+
+        <h3>7.4 Comisión de agente <span class="badge alto">ALTO</span></h3>
+        <p>
+          La comisión genera su propio item de tipo commission, sobre la <b>cuenta del agente</b>, no
+          la del cliente. Sus installments son clase <code>P</code>. Por eso la comisión de una póliza
+          nunca aparece mirando solo el item de prima.
+        </p>
+
+        <div class="checkpoint">
+          <strong>Comprobá tu comprensión</strong>
+          <ol>
+            <li>¿Sobre qué cuenta se registra la comisión y por qué?</li>
+            <li>En una cancelación, ¿qué registro evidencia que la devolución se ejecutó?</li>
+          </ol>
+        </div>
+
+        <span class="cite"><b>Fuentes:</b> reconstrucción narrativa de <code>transcription.txt</code> validada contra el modelo de datos BLC (items, installments, transactions y pay run).</span>
+      </section>
+
+      <!-- ===== 8 ===== -->
+      <section class="section" id="s8" data-nav-label="8. Moneda y conversión">
+        <div class="section-head">
+          <div class="section-num">8</div>
+          <h2><span class="kicker">Unidad 8</span>Moneda y conversión</h2>
+        </div>
+
+        <div class="goals">
+          <strong>Al terminar esta unidad vas a poder</strong>
+          <ul>
+            <li>Distinguir moneda original de moneda funcional.</li>
+            <li>Explicar de dónde salen las diferencias de cambio y redondeo.</li>
+          </ul>
+        </div>
+
+        <p>
+          BLC es multimoneda por diseño. La obligación conserva su <b>moneda original</b>, mientras que
+          la organización mantiene además la <b>moneda funcional</b> para consolidar y contabilizar.
+          Por eso conviven importes como <code>AMOUNT</code> y <code>FC_AMOUNT</code>, junto a la tasa
+          y la fecha de tasa utilizadas.
+        </p>
+
+        <div class="callout info">
+          <span class="label">Dónde aparece la conversión</span>
+          <p>
+            En la aplicación se registran tasas del lado origen y del lado destino
+            (<code>SOURCE_RATE</code> / <code>TARGET_RATE</code>), porque el pago y la deuda pueden
+            estar en monedas distintas. Las diferencias resultantes se registran explícitamente en
+            lugar de ocultarse en el saldo.
+          </p>
+        </div>
+
+        <div class="callout warn">
+          <span class="label">Error frecuente</span>
+          <p>Comparar el importe de un pago con el de una deuda sin normalizar moneda ni fecha de tasa. La diferencia aparente no siempre es un faltante de cobro.</p>
+        </div>
+
+        <div class="checkpoint">
+          <strong>Comprobá tu comprensión</strong>
+          <ol>
+            <li>¿Por qué la aplicación necesita guardar dos tasas y no una?</li>
+          </ol>
+        </div>
+
+        <span class="cite"><b>Fuentes:</b> modelo de datos BLC — importes y monedas en <code>BLC_TRANSACTIONS</code> (pág. 238) y tasas en <code>BLC_APPLICATIONS</code> (pág. 17).</span>
+      </section>
+
+      <!-- ===== 9 ===== -->
+      <section class="section" id="s9" data-nav-label="9. Catálogos y configuración">
+        <div class="section-head">
+          <div class="section-num">9</div>
+          <h2><span class="kicker">Unidad 9</span>Catálogos y configuración</h2>
+        </div>
+
+        <div class="goals">
+          <strong>Al terminar esta unidad vas a poder</strong>
+          <ul>
+            <li>Consultar correctamente <code>BLC_LOOKUPS</code> usando el lookup set.</li>
+            <li>Reconocer que gran parte del comportamiento del módulo es configuración, no código.</li>
+          </ul>
+        </div>
+
+        <h3>9.1 <code>BLC_LOOKUPS</code> <span class="badge alto">ALTO</span></h3>
+        <p>
+          Es el catálogo central. Los valores se agrupan por <code>LOOKUP_SET</code> según su
+          significado, y cada valor puede llevar <b>tags</b> que no son etiquetas decorativas: definen
+          comportamiento del sistema. Por ejemplo, en el conjunto de tipos de installment, el
+          <code>TAG_0</code> transporta la clase asociada.
+        </p>
+        <div class="callout danger">
+          <span class="label">Regla no negociable</span>
+          <p>Nunca buscar un código sin filtrar por <code>LOOKUP_SET</code>: el mismo código puede existir en varios conjuntos con significados distintos.</p>
+        </div>
+
+        <h3>9.2 Configuración por entidad legal <span class="badge medio">MEDIO</span></h3>
+        <p>
+          Numeración de documentos, reglas de aplicación automática, calendarios y perfiles de
+          cobranza se definen por entidad legal y por tipo de operación. Dos instalaciones del mismo
+          producto pueden comportarse distinto sin que cambie una línea de código.
+        </p>
+
+        <h3>9.3 Consecuencia para el análisis <span class="badge alto">ALTO</span></h3>
+        <p>
+          Antes de concluir que hay un defecto funcional, hay que verificar la configuración vigente.
+          Muchos comportamientos “extraños” son parametrización esperada.
+        </p>
+
+        <div class="checkpoint">
+          <strong>Comprobá tu comprensión</strong>
+          <ol>
+            <li>¿Qué información puede transportar un tag de lookup?</li>
+            <li>¿Por qué dos clientes del mismo producto pueden numerar documentos distinto?</li>
+          </ol>
+        </div>
+
+        <span class="cite"><b>Fuentes:</b> modelo de datos BLC — <code>BLC_LOOKUPS</code> (pág. 105-113), <code>BLC_INSTALLMENTS.INSTALLMENT_TYPE</code> (pág. 89).</span>
+      </section>
+
+      <!-- ===== 10 ===== -->
+      <section class="section" id="s10" data-nav-label="10. Cobranza vencida">
+        <div class="section-head">
+          <div class="section-num">10</div>
+          <h2><span class="kicker">Unidad 10</span>Cobranza vencida (overdue)</h2>
+        </div>
+
+        <div class="goals">
+          <strong>Al terminar esta unidad vas a poder</strong>
+          <ul>
+            <li>Explicar cómo se dispara y se controla el proceso de mora.</li>
+            <li>Interpretar los estados de los eventos de cobranza.</li>
+          </ul>
+        </div>
+
+        <h3>10.1 Qué automatiza <span class="badge alto">ALTO</span></h3>
+        <p>
+          El subsistema de overdue detecta deuda vencida y ejecuta una secuencia configurada de
+          acciones: avisos, recargos, suspensión y eventualmente cancelación. No es una simple
+          consulta de vencidos: es una máquina de estados con historia propia.
+        </p>
+
+        <h3>10.2 Estados de los eventos <span class="badge alto">ALTO</span></h3>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Estado</th><th>Significado</th></tr></thead>
+            <tbody>
+              <tr><td><code>N</code></td><td>Nuevo: creado pero aún no procesado</td></tr>
+              <tr><td><code>W</code></td><td>Waiting: espera un prerrequisito, dependencia o entrega de notificación</td></tr>
+              <tr><td><code>P</code></td><td>Procesado</td></tr>
+              <tr><td><code>C</code></td><td>Cancelado, típicamente porque la deuda se regularizó</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>10.3 Relación con el saldo <span class="badge alto">ALTO</span></h3>
+        <p>
+          Si el cliente paga, los eventos pendientes se cancelan. Por eso encontrar eventos en
+          estado cancelado es señal de regularización, no de falla.
+        </p>
+
+        <h3>10.4 Lectura recomendada <span class="badge medio">MEDIO</span></h3>
+        <p>
+          Para diagnosticar un caso de mora hay que mirar en conjunto: la transaction vencida, su
+          saldo actual, los eventos generados y su estado, y los pagos posteriores. Cualquiera de
+          esos elementos por separado induce a error.
+        </p>
+
+        <div class="checkpoint">
+          <strong>Comprobá tu comprensión</strong>
+          <ol>
+            <li>¿Qué significa encontrar muchos eventos en estado <code>W</code>?</li>
+            <li>¿Por qué un evento cancelado puede ser buena noticia?</li>
+          </ol>
+        </div>
+
+        <span class="cite"><b>Fuentes:</b> modelo de datos BLC — <code>BLC_OVERDUE_EVENTS</code> (pág. 126-131) y estructuras de proceso de cobranza asociadas.</span>
+      </section>
+
+      <!-- ===== 11 ===== -->
+      <section class="section" id="s11" data-nav-label="11. Banco, clearing y remittances">
+        <div class="section-head">
+          <div class="section-num">11</div>
+          <h2><span class="kicker">Unidad 11</span>Extractos bancarios, clearing y remittances</h2>
+        </div>
+
+        <div class="goals">
+          <strong>Al terminar esta unidad vas a poder</strong>
+          <ul>
+            <li>Ubicar el momento exacto en que el dinero se considera confirmado.</li>
+            <li>Explicar cómo se reparte un pago masivo de bróker.</li>
+          </ul>
+        </div>
+
+        <h3>11.1 <code>BLC_CLEARINGS</code> <span class="badge alto">ALTO</span></h3>
+        <p>
+          Registra la confirmación bancaria del movimiento. Según la configuración, un payment puede
+          registrarse y hasta aplicarse antes de estar cleared. De ahí la diferencia entre
+          <code>OPEN_BALANCE</code> y <code>ACTUAL_OPEN_BALANCE</code>.
+        </p>
+
+        <h3>11.2 Extractos bancarios <span class="badge medio">MEDIO</span></h3>
+        <p>
+          Los movimientos informados por el banco se cargan y se concilian contra los payments
+          esperados. Las diferencias generan partidas a investigar, no correcciones automáticas.
+        </p>
+
+        <h3>11.3 <code>BLC_REMITTANCES</code> <span class="badge alto">ALTO</span></h3>
+        <p>
+          Resuelve el caso típico del bróker: una sola transferencia que corresponde a muchas
+          pólizas. La remittance advice indica cómo distribuir ese importe. El resultado es
+          <b>un payment</b> y <b>muchas applications</b>.
+        </p>
+        <div class="callout info">
+          <span class="label">Cómo diagnosticarlo</span>
+          <p>Si un pago de bróker “no aparece” en una póliza, hay que buscar por remittance y por las applications derivadas, no por el importe total.</p>
+        </div>
+
+        <div class="checkpoint">
+          <strong>Comprobá tu comprensión</strong>
+          <ol>
+            <li>¿Un pago aplicado implica dinero confirmado? Justificá.</li>
+            <li>¿Cuántos payments genera una transferencia de bróker por 30 pólizas?</li>
+          </ol>
+        </div>
+
+        <span class="cite"><b>Fuentes:</b> modelo de datos BLC — <code>BLC_CLEARINGS</code> (pág. 53-56), <code>BLC_REMITTANCES</code> (pág. 186-191).</span>
+      </section>
+
+      <!-- ===== 12 ===== -->
+      <section class="section" id="s12" data-nav-label="12. Pay run y batches">
+        <div class="section-head">
+          <div class="section-num">12</div>
+          <h2><span class="kicker">Unidad 12</span>Pay run y procesamiento por lotes</h2>
+        </div>
+
+        <div class="goals">
+          <strong>Al terminar esta unidad vas a poder</strong>
+          <ul>
+            <li>Describir cómo se generan pagos masivos de salida.</li>
+            <li>Usar la referencia de lote para auditar un proceso completo.</li>
+          </ul>
+        </div>
+
+        <p>
+          El <b>pay run</b> selecciona importes pendientes de pago según criterios configurados
+          —entidad legal, método de pago, fecha de vencimiento, moneda— y genera los payments
+          correspondientes. Es el mecanismo habitual para siniestros, comisiones y devoluciones.
+        </p>
+
+        <div class="callout key">
+          <span class="label">Valor para el análisis</span>
+          <p>
+            Los procesos batch dejan referencia de ejecución. Eso permite reconstruir qué se procesó
+            en una corrida, qué quedó excluido y por qué, sin depender de logs externos.
+          </p>
+        </div>
+
+        <p>
+          Cuando un pago esperado no se generó, las causas más frecuentes son: el importe no cumplía
+          los criterios de selección, faltaban datos bancarios en la cuenta, o el documento no estaba
+          en estado aprobado.
+        </p>
+
+        <div class="checkpoint">
+          <strong>Comprobá tu comprensión</strong>
+          <ol>
+            <li>Mencioná tres motivos por los que un payable no entra en un pay run.</li>
+          </ol>
+        </div>
+
+        <span class="cite"><b>Fuentes:</b> modelo de datos BLC — <code>BLC_PAY_RUN</code> (pág. 167-171) y estructuras de procesamiento por lotes.</span>
+      </section>
+
+      <!-- ===== 13 ===== -->
+      <section class="section" id="s13" data-nav-label="13. Impuestos y comisiones">
+        <div class="section-head">
+          <div class="section-num">13</div>
+          <h2><span class="kicker">Unidad 13</span>Impuestos y comisiones</h2>
+        </div>
+
+        <div class="goals">
+          <strong>Al terminar esta unidad vas a poder</strong>
+          <ul>
+            <li>Identificar los tipos de impuesto del modelo.</li>
+            <li>Explicar por qué un offset tax genera un movimiento negativo.</li>
+          </ul>
+        </div>
+
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Tipo</th><th>Comportamiento</th></tr></thead>
+            <tbody>
+              <tr><td>Sales</td><td>Impuesto sobre la operación, calculado sobre la base imponible</td></tr>
+              <tr><td>Withholding</td><td>Retención practicada sobre un importe a pagar</td></tr>
+              <tr><td>Charge</td><td>Cargo adicional aplicado al importe</td></tr>
+              <tr><td>Offset</td><td>Porcentaje negativo que compensa otro impuesto, generando signo opuesto</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          Las comisiones siguen la misma mecánica que cualquier otro motivo financiero: item propio,
+          installments clase <code>P</code> y transaction payable sobre la cuenta del agente. Pueden
+          tener retenciones asociadas, que se expresan como impuestos de tipo withholding.
+        </p>
+
+        <div class="callout warn">
+          <span class="label">Error frecuente</span>
+          <p>Sumar todas las transactions de impuestos sin considerar las de tipo offset. El total resultante sobreestima la carga impositiva.</p>
+        </div>
+
+        <div class="checkpoint">
+          <strong>Comprobá tu comprensión</strong>
+          <ol>
+            <li>¿Qué diferencia hay entre withholding y offset?</li>
+          </ol>
+        </div>
+
+        <span class="cite"><b>Fuentes:</b> modelo de datos BLC — <code>BLC_TAXES</code> (pág. 228-233).</span>
+      </section>
+
+      <!-- ===== 14 ===== -->
+      <section class="section" id="s14" data-nav-label="14. Contabilidad (subledger)">
+        <div class="section-head">
+          <div class="section-num">14</div>
+          <h2><span class="kicker">Unidad 14</span>Contabilidad: el subledger</h2>
+        </div>
+
+        <div class="goals">
+          <strong>Al terminar esta unidad vas a poder</strong>
+          <ul>
+            <li>Recorrer el camino desde un hecho financiero hasta el asiento contable.</li>
+            <li>Diagnosticar eventos contables en error.</li>
+          </ul>
+        </div>
+
+        <h3>14.1 <code>BLC_SLA_EVENTS</code> <span class="badge alto">ALTO</span></h3>
+        <p>
+          Cada hecho con impacto financiero —emisión, cobro, reversa, pago— genera un evento de
+          subledger que representa qué ocurrió, sobre qué objeto y en qué fecha contable.
+        </p>
+
+        <h3>14.2 <code>BLC_SLA_EVENT_STATUS</code> <span class="badge alto">ALTO</span></h3>
+        <p>El estado se controla por ledger, porque un mismo evento puede contabilizarse en varios libros:</p>
+        <div class="chips">
+          <span class="chip"><b>U</b> Unprocessed</span>
+          <span class="chip"><b>E</b> Error — con código de error registrado</span>
+          <span class="chip"><b>P</b> Pending</span>
+          <span class="chip"><b>A</b> Accounted</span>
+        </div>
+
+        <h3>14.3 <code>BLC_GL_INSIS2GL</code> <span class="badge alto">ALTO</span></h3>
+        <p>
+          Es la salida final: las líneas contables que se envían al libro mayor, con cuenta, importe,
+          signo y referencias al objeto de origen. Permite ir del asiento de vuelta al contrato.
+        </p>
+
+        <div class="callout info">
+          <span class="label">Patrón de diagnóstico</span>
+          <p>
+            Si una operación “no llegó a contabilidad”, la secuencia de verificación es:
+            ¿existe el evento? &rarr; ¿en qué estado está por ledger? &rarr; ¿hay código de error? &rarr;
+            ¿se generaron líneas en <code>BLC_GL_INSIS2GL</code>? Un error en esta capa <b>no</b> revierte
+            el cobro: son capas independientes.
+          </p>
+        </div>
+
+        <div class="checkpoint">
+          <strong>Comprobá tu comprensión</strong>
+          <ol>
+            <li>¿Por qué el estado se guarda por ledger y no en el evento?</li>
+            <li>Un evento está en <code>E</code>. ¿El cliente sigue debiendo dinero?</li>
+          </ol>
+        </div>
+
+        <span class="cite"><b>Fuentes:</b> modelo de datos BLC — <code>BLC_SLA_EVENTS</code> (pág. 215-219), <code>BLC_SLA_EVENT_STATUS</code> (pág. 220-222), <code>BLC_GL_INSIS2GL</code> (pág. 70-74).</span>
+      </section>
+
+      <!-- ===== 15 ===== -->
+      <section class="section" id="s15" data-nav-label="15. Consultas de trazabilidad">
+        <div class="section-head">
+          <div class="section-num">15</div>
+          <h2><span class="kicker">Unidad 15</span>Consultas de trazabilidad</h2>
+        </div>
+
+        <div class="goals">
+          <strong>Al terminar esta unidad vas a poder</strong>
+          <ul>
+            <li>Recorrer la cadena con SQL, en ambos sentidos.</li>
+            <li>Aplicar los guardrails obligatorios de consulta.</li>
+          </ul>
+        </div>
+
+        <div class="callout danger">
+          <span class="label">Reglas obligatorias de acceso</span>
+          <p>
+            Acceso <b>exclusivamente de lectura</b>: sin <code>INSERT</code>, <code>UPDATE</code>,
+            <code>DELETE</code> ni DDL. Todo <code>SELECT</code> debe limitar filas con
+            <code>ROWNUM</code>. Los datos personales se enmascaran. Las consultas siguientes son
+            plantillas de análisis: ajustá nombres de columna a la versión instalada.
+          </p>
+        </div>
+
+        <h3>15.1 Del contrato a los importes</h3>
+<pre><code><span class="cmt">-- Items e installments de un acuerdo</span>
+<span class="kw">SELECT</span> i.ITEM_ID, i.ITEM_TYPE, n.INSTALLMENT_ID,
+       n.INSTALLMENT_CLASS, n.AMOUNT, n.CURRENCY, n.DUE_DATE, n.ANNEX
+  <span class="kw">FROM</span> BLC_ITEMS i
+  <span class="kw">JOIN</span> BLC_INSTALLMENTS n <span class="kw">ON</span> n.ITEM_ID = i.ITEM_ID
+ <span class="kw">WHERE</span> i.AGREEMENT = :agreement
+   <span class="kw">AND</span> ROWNUM &lt;= 100
+ <span class="kw">ORDER BY</span> n.DUE_DATE;</code></pre>
+
+        <h3>15.2 Del importe a la deuda formal</h3>
+<pre><code><span class="cmt">-- Transaction y saldo generado por un installment</span>
+<span class="kw">SELECT</span> n.INSTALLMENT_ID, t.TRANSACTION_ID, t.TRANSACTION_CLASS,
+       t.AMOUNT, t.OPEN_BALANCE, t.ACTUAL_OPEN_BALANCE, t.PAID_STATUS
+  <span class="kw">FROM</span> BLC_INSTALLMENTS n
+  <span class="kw">JOIN</span> BLC_TRANSACTIONS t <span class="kw">ON</span> t.TRANSACTION_ID = n.TRANSACTION_ID
+ <span class="kw">WHERE</span> n.ITEM_ID = :item_id
+   <span class="kw">AND</span> ROWNUM &lt;= 100;</code></pre>
+
+        <h3>15.3 De la deuda al dinero</h3>
+<pre><code><span class="cmt">-- Pagos aplicados a una transaction</span>
+<span class="kw">SELECT</span> a.APPLICATION_ID, a.APPL_CLASS, a.AMOUNT,
+       p.PAYMENT_ID, p.PAYMENT_DATE, p.AMOUNT <span class="kw">AS</span> PAYMENT_AMOUNT,
+       p.APPLIED_STATUS, a.REVERSED_APPL
+  <span class="kw">FROM</span> BLC_APPLICATIONS a
+  <span class="kw">JOIN</span> BLC_PAYMENTS p <span class="kw">ON</span> p.PAYMENT_ID = a.SOURCE_PAYMENT
+ <span class="kw">WHERE</span> a.TARGET_TRX = :transaction_id
+   <span class="kw">AND</span> ROWNUM &lt;= 100;</code></pre>
+
+        <h3>15.4 Del dinero de vuelta al contrato</h3>
+<pre><code><span class="cmt">-- Camino inverso: un pago, qué canceló</span>
+<span class="kw">SELECT</span> p.PAYMENT_ID, a.APPLICATION_ID, a.APPL_CLASS,
+       t.TRANSACTION_ID, i.ITEM_ID, i.ITEM_TYPE, i.AGREEMENT
+  <span class="kw">FROM</span> BLC_PAYMENTS p
+  <span class="kw">JOIN</span> BLC_APPLICATIONS a <span class="kw">ON</span> a.SOURCE_PAYMENT = p.PAYMENT_ID
+  <span class="kw">LEFT JOIN</span> BLC_TRANSACTIONS t <span class="kw">ON</span> t.TRANSACTION_ID = a.TARGET_TRX
+  <span class="kw">LEFT JOIN</span> BLC_ITEMS i <span class="kw">ON</span> i.ITEM_ID = <span class="kw">NVL</span>(a.TARGET_ITEM, t.ITEM_ID)
+ <span class="kw">WHERE</span> p.PAYMENT_ID = :payment_id
+   <span class="kw">AND</span> ROWNUM &lt;= 100;</code></pre>
+
+        <h3>15.5 Documento y su contenido</h3>
+<pre><code><span class="cmt">-- Transactions que integran un documento</span>
+<span class="kw">SELECT</span> d.DOC_ID, d.DOC_NUMBER, d.STATUS,
+       t.TRANSACTION_ID, t.TRANSACTION_CLASS, t.AMOUNT, t.OPEN_BALANCE
+  <span class="kw">FROM</span> BLC_DOCUMENTS d
+  <span class="kw">JOIN</span> BLC_TRANSACTIONS t <span class="kw">ON</span> t.DOC_ID = d.DOC_ID
+ <span class="kw">WHERE</span> d.DOC_ID = :doc_id
+   <span class="kw">AND</span> ROWNUM &lt;= 100;</code></pre>
+
+        <h3>15.6 Verificación contable</h3>
+<pre><code><span class="cmt">-- Eventos de subledger y su estado por ledger</span>
+<span class="kw">SELECT</span> e.EVENT_ID, e.EVENT_TYPE, e.EVENT_DATE,
+       s.LEDGER_ID, s.STATUS, s.ERROR_CODE
+  <span class="kw">FROM</span> BLC_SLA_EVENTS e
+  <span class="kw">JOIN</span> BLC_SLA_EVENT_STATUS s <span class="kw">ON</span> s.EVENT_ID = e.EVENT_ID
+ <span class="kw">WHERE</span> s.STATUS = <span class="cmt">'E'</span>
+   <span class="kw">AND</span> ROWNUM &lt;= 100;</code></pre>
+
+        <div class="checkpoint">
+          <strong>Comprobá tu comprensión</strong>
+          <ol>
+            <li>¿Qué consulta usarías para responder “este pago, ¿qué canceló?”.</li>
+            <li>¿Por qué la 15.4 usa <code>LEFT JOIN</code> y no <code>JOIN</code>?</li>
+          </ol>
+        </div>
+
+        <span class="cite"><b>Fuentes:</b> claves foráneas del modelo de datos BLC (<code>TRX_DOC</code>, <code>APPL_PAYMENT</code>, <code>APPL_TRX</code>, <code>INST_TRX</code>) · guardrails del <code>agent-bundle</code>.</span>
+      </section>
+
+      <!-- ===== 16 ===== -->
+      <section class="section" id="s16" data-nav-label="16. Reglas de lectura">
+        <div class="section-head">
+          <div class="section-num">16</div>
+          <h2><span class="kicker">Unidad 16</span>Quince reglas de lectura del módulo</h2>
+        </div>
+
+        <div class="goals">
+          <strong>Al terminar esta unidad vas a poder</strong>
+          <ul>
+            <li>Aplicar un checklist mental antes de concluir cualquier diagnóstico.</li>
+          </ul>
+        </div>
+
+        <ol>
+          <li>La cuenta responde <b>de quién</b>; el item, <b>por qué</b>; el installment, <b>cuánto y cuándo</b>.</li>
+          <li>Una póliza genera varios items: prima, comisión, siniestro, reaseguro.</li>
+          <li>Nunca buscar solo por número de póliza: seguir el <code>ITEM_ID</code>.</li>
+          <li>La clase del installment cambia por completo su interpretación.</li>
+          <li>Clase <code>R</code> y <code>E</code> son contables: no se facturan.</li>
+          <li>El signo se lee junto con clase y tipo, nunca aislado.</li>
+          <li>La transaction es donde vive el saldo.</li>
+          <li><code>OPEN_BALANCE</code> y <code>ACTUAL_OPEN_BALANCE</code> pueden diferir legítimamente.</li>
+          <li><code>P</code> significa cosas distintas según la columna.</li>
+          <li>Un documento puede agrupar varias transactions, incluso de signo opuesto.</li>
+          <li>La application es la única prueba de imputación.</li>
+          <li>La existencia de un installment <b>no</b> implica que exista un cobro.</li>
+          <li>Un payment puede existir sin cancelar deuda alguna.</li>
+          <li>Un saldo negativo <b>no</b> implica devolución ejecutada.</li>
+          <li>Un error contable no revierte un cobro: las capas son independientes.</li>
+        </ol>
+
+        <div class="callout key">
+          <span class="label">Regla de oro</span>
+          <p>Ante cualquier discrepancia, recorrer la cadena completa antes de concluir. Los datos ganan sobre las suposiciones.</p>
+        </div>
+
+        <span class="cite"><b>Fuentes:</b> síntesis del curso, derivada del modelo de datos BLC y del método de investigación aplicado.</span>
+      </section>
+
+      <!-- ===== 17 ===== -->
+      <section class="section" id="s17" data-nav-label="17. Preguntas abiertas">
+        <div class="section-head">
+          <div class="section-num">17</div>
+          <h2><span class="kicker">Unidad 17</span>Preguntas abiertas para el área funcional</h2>
+        </div>
+
+        <div class="goals">
+          <strong>Al terminar esta unidad vas a poder</strong>
+          <ul>
+            <li>Identificar qué falta confirmar antes de dar por cerrado el análisis.</li>
+          </ul>
+        </div>
+
+        <p>Estos puntos dependen de configuración o de decisiones de negocio y <b>no</b> pueden resolverse solo con el modelo de datos:</p>
+
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>#</th><th>Pregunta</th><th>Impacto</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>¿Qué lookup sets están efectivamente en uso en la instalación?</td><td>Interpretación de tipos y clases</td></tr>
+              <tr><td>2</td><td>¿Qué tipos de item se usan además de policy, commission y claim?</td><td>Alcance del análisis</td></tr>
+              <tr><td>3</td><td>¿La aplicación de pagos es automática, manual o mixta?</td><td>Explicación de pagos sin aplicar</td></tr>
+              <tr><td>4</td><td>¿Se permite aplicar pagos antes del clearing?</td><td>Diferencias entre ambos saldos</td></tr>
+              <tr><td>5</td><td>¿Qué secuencia de eventos de overdue está configurada?</td><td>Diagnóstico de mora</td></tr>
+              <tr><td>6</td><td>¿Cómo se numeran los documentos por entidad legal?</td><td>Búsquedas por número</td></tr>
+              <tr><td>7</td><td>¿Qué política de redondeo y diferencia de cambio se aplica?</td><td>Descuadres menores</td></tr>
+              <tr><td>8</td><td>¿Qué criterios usa el pay run en producción?</td><td>Pagos no generados</td></tr>
+              <tr><td>9</td><td>¿Qué impuestos de tipo offset están activos?</td><td>Totales de impuestos</td></tr>
+              <tr><td>10</td><td>¿Cuántos ledgers hay y cuál es el principal?</td><td>Lectura de estados SLA</td></tr>
+              <tr><td>11</td><td>¿Cómo se procesan las remittances de brókers?</td><td>Pagos masivos</td></tr>
+              <tr><td>12</td><td>¿Qué endosos generan devolución automática y cuáles no?</td><td>Saldos negativos</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <span class="cite"><b>Fuentes:</b> vacíos detectados al contrastar <code>transcription.txt</code> con el modelo de datos BLC. Requieren validación con el área funcional.</span>
+      </section>
+
+      <!-- ===== 18 ===== -->
+      <section class="section" id="s18" data-nav-label="18. Material derivable">
+        <div class="section-head">
+          <div class="section-num">18</div>
+          <h2><span class="kicker">Unidad 18</span>Material derivable de esta reconstrucción</h2>
+        </div>
+
+        <div class="goals">
+          <strong>Al terminar esta unidad vas a poder</strong>
+          <ul>
+            <li>Reutilizar el material para armar capacitaciones más cortas o específicas.</li>
+          </ul>
+        </div>
+
+        <p>De este contenido se pueden derivar directamente:</p>
+        <div class="cards">
+          <div class="card"><h5>10 módulos de capacitación</h5><p>Uno por bloque temático, de 20 a 30 minutos cada uno.</p></div>
+          <div class="card"><h5>Guía de diagnóstico</h5><p>Checklist de las 15 reglas aplicado a incidentes reales.</p></div>
+          <div class="card"><h5>Recetario SQL</h5><p>Las seis consultas de la unidad 15 como plantillas de trabajo.</p></div>
+          <div class="card"><h5>Onboarding técnico</h5><p>Ruta de lectura para perfiles que ingresan al proyecto.</p></div>
+          <div class="card"><h5>Banco de evaluación</h5><p>Las 24 preguntas del examen, ampliables por tema.</p></div>
+          <div class="card"><h5>Glosario operativo</h5><p>Vocabulario común entre negocio y tecnología.</p></div>
+        </div>
+
+        <span class="cite"><b>Fuente:</b> sección 18 del documento <code>BLC_reconstruccion_capacitacion.md</code>.</span>
+      </section>
+
+      <!-- ===== 19 ===== -->
+      <section class="section" id="s19" data-nav-label="19. Conclusión">
+        <div class="section-head">
+          <div class="section-num">19</div>
+          <h2><span class="kicker">Unidad 19</span>Conclusión</h2>
+        </div>
+
+        <div class="goals">
+          <strong>Al terminar esta unidad vas a poder</strong>
+          <ul>
+            <li>Sintetizar el criterio profesional para trabajar sobre BLC.</li>
+          </ul>
+        </div>
+
+        <p>
+          BLC no es un módulo de facturación: es el <b>registro de verdad financiera</b> de la
+          operación de seguros. Su aparente complejidad responde a una necesidad concreta: poder
+          demostrar, en cualquier momento, qué se debía, quién lo debía, qué se cobró realmente y
+          cómo impactó en contabilidad, sin perder historia.
+        </p>
+
+        <div class="callout key">
+          <span class="label">Cierre</span>
+          <p>
+            Quien entiende la cadena puede diagnosticar cualquier caso del módulo. Quien mira tablas
+            sueltas, siempre llega a conclusiones parciales.
+          </p>
+        </div>
+
+        <span class="cite"><b>Fuentes:</b> síntesis de <code>transcription.txt</code> y del modelo de datos <code>Billing_and_Collection_Data_Model.pdf</code>.</span>
+      </section>
+
+      <!-- ===== ANEXO A ===== -->
+      <section class="section" id="anexoA" data-nav-label="Anexo A. Trazabilidad">
+        <div class="section-head">
+          <div class="section-num">A</div>
+          <h2><span class="kicker">Anexo A</span>Trazabilidad de objetos verificados</h2>
+        </div>
+
+        <div class="er">
+          <div class="er-node">
+            <h5>BLC_ACCOUNTS</h5><span class="role">Titular financiero</span>
+            <ul><li>ACCOUNT_ID</li><li>Parte y rol</li><li>Perfil de cobro/pago</li></ul>
+            <span class="fk">pág. 2-9</span>
+          </div>
+          <div class="er-node">
+            <h5>BLC_ITEMS</h5><span class="role">Motivo financiero</span>
+            <ul><li>ITEM_ID, ITEM_TYPE</li><li>SOURCE / AGREEMENT</li><li>COMPONENT / DETAIL</li></ul>
+            <span class="fk">pág. 92-98</span>
+          </div>
+          <div class="er-node">
+            <h5>BLC_INSTALLMENTS</h5><span class="role">Cuánto y cuándo</span>
+            <ul><li>AMOUNT, DUE_DATE</li><li>INSTALLMENT_CLASS</li><li>ANNEX</li></ul>
+            <span class="fk">FK &rarr; BLC_TRANSACTIONS (pág. 83-91)</span>
+          </div>
+          <div class="er-node">
+            <h5>BLC_TRANSACTIONS</h5><span class="role">Deuda formal</span>
+            <ul><li>OPEN_BALANCE</li><li>ACTUAL_OPEN_BALANCE</li><li>PAID_STATUS</li></ul>
+            <span class="fk">FK &rarr; BLC_DOCUMENTS (pág. 237-245)</span>
+          </div>
+          <div class="er-node">
+            <h5>BLC_DOCUMENTS</h5><span class="role">Objeto formal</span>
+            <ul><li>DOC_ID, DOC_NUMBER</li><li>STATUS</li></ul>
+            <span class="fk">pág. 62-69</span>
+          </div>
+          <div class="er-node">
+            <h5>BLC_PAYMENTS</h5><span class="role">Dinero real</span>
+            <ul><li>PAYMENT_ID</li><li>APPLIED_STATUS</li><li>OPEN_BALANCE</li></ul>
+            <span class="fk">pág. 140-152</span>
+          </div>
+          <div class="er-node">
+            <h5>BLC_APPLICATIONS</h5><span class="role">Imputación</span>
+            <ul><li>APPL_CLASS</li><li>SOURCE_PAYMENT</li><li>TARGET_TRX / TARGET_ITEM</li></ul>
+            <span class="fk">REVERSED_APPL &rarr; self (pág. 16-23)</span>
+          </div>
+          <div class="er-node">
+            <h5>BLC_CLEARINGS</h5><span class="role">Confirmación bancaria</span>
+            <ul><li>Referencia al payment</li><li>Fecha de clearing</li></ul>
+            <span class="fk">pág. 53-56</span>
+          </div>
+          <div class="er-node">
+            <h5>BLC_SLA_EVENTS</h5><span class="role">Evento contable</span>
+            <ul><li>EVENT_ID, EVENT_TYPE</li><li>Estado por ledger</li></ul>
+            <span class="fk">pág. 215-222</span>
+          </div>
+          <div class="er-node">
+            <h5>BLC_GL_INSIS2GL</h5><span class="role">Asiento final</span>
+            <ul><li>Cuenta e importe</li><li>Referencia al origen</li></ul>
+            <span class="fk">pág. 70-74</span>
+          </div>
+        </div>
+
+        <span class="cite"><b>Fuente:</b> <code>Billing_and_Collection_Data_Model.pdf</code>, schema <code>INSIS_GEN_BLC_V10</code>.</span>
+      </section>
+
+      <!-- ===== ANEXO B ===== -->
+      <section class="section" id="anexoB" data-nav-label="Anexo B. Equivalencias">
+        <div class="section-head">
+          <div class="section-num">B</div>
+          <h2><span class="kicker">Anexo B</span>Equivalencias de términos de la grabación</h2>
+        </div>
+
+        <p>Términos escuchados en la capacitación y su equivalente real en el modelo:</p>
+
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>En la grabación</th><th>Equivale a</th></tr></thead>
+            <tbody>
+              <tr><td>“la cuenta del cliente”</td><td><code>BLC_ACCOUNTS</code></td></tr>
+              <tr><td>“el ítem” / “la cosa que se factura”</td><td><code>BLC_ITEMS</code></td></tr>
+              <tr><td>“la cuota” / “el vencimiento”</td><td><code>BLC_INSTALLMENTS</code></td></tr>
+              <tr><td>“la deuda” / “el saldo”</td><td><code>BLC_TRANSACTIONS</code></td></tr>
+              <tr><td>“la factura”</td><td><code>BLC_DOCUMENTS</code></td></tr>
+              <tr><td>“imputar” / “matchear el pago”</td><td><code>BLC_APPLICATIONS</code></td></tr>
+              <tr><td>“la plata” / “el cobro”</td><td><code>BLC_PAYMENTS</code></td></tr>
+              <tr><td>“cuando el banco confirma”</td><td><code>BLC_CLEARINGS</code></td></tr>
+              <tr><td>“el proceso de mora”</td><td><code>BLC_OVERDUE_EVENTS</code></td></tr>
+              <tr><td>“lo que va a contabilidad”</td><td><code>BLC_SLA_EVENTS</code> &rarr; <code>BLC_GL_INSIS2GL</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <span class="cite"><b>Fuente:</b> mapeo de <code>transcription.txt</code> contra nombres reales del modelo de datos.</span>
+      </section>
+
+      <!-- ===== ANEXO C ===== -->
+      <section class="section" id="anexoC" data-nav-label="Anexo C. Estado de evidencia">
+        <div class="section-head">
+          <div class="section-num">C</div>
+          <h2><span class="kicker">Anexo C</span>Estado de la evidencia</h2>
+        </div>
+
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Tema</th><th>Confianza</th><th>Base</th></tr></thead>
+            <tbody>
+              <tr><td>Cadena operativa completa</td><td><span class="badge alto">ALTO</span></td><td>Claves foráneas verificadas en el modelo</td></tr>
+              <tr><td>Clases de installment y transaction</td><td><span class="badge alto">ALTO</span></td><td>Dominios documentados por columna</td></tr>
+              <tr><td>Saldos y estados</td><td><span class="badge alto">ALTO</span></td><td>Definiciones explícitas del modelo</td></tr>
+              <tr><td>Escenario de cancelación/endoso</td><td><span class="badge medio">MEDIO</span></td><td>Inferido; depende de parametrización</td></tr>
+              <tr><td>Configuración por entidad legal</td><td><span class="badge medio">MEDIO</span></td><td>Estructura presente, valores desconocidos</td></tr>
+              <tr><td>Reglas contables concretas</td><td><span class="badge bajo">BAJO</span></td><td>Depende del cliente y del ledger</td></tr>
+              <tr><td>Datos productivos</td><td><span class="badge bajo">BAJO</span></td><td>Sin conexión Oracle activa durante la reconstrucción</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="label">Nota metodológica</span>
+          <p>
+            Nada marcado como <span class="badge medio">MEDIO</span> o <span class="badge bajo">BAJO</span>
+            debe usarse como afirmación definitiva frente al cliente sin validación previa.
+          </p>
+        </div>
+
+        <span class="cite"><b>Fuente:</b> evaluación de evidencia según el método de investigación aplicado (umbral de confianza 80%).</span>
+      </section>
+
+      <!-- ===== EXAMEN ===== -->
+      <section class="section" id="examen" data-nav-label="Examen final" data-no-mark="true">
+        <div class="section-head">
+          <div class="section-num">&#10003;</div>
+          <h2><span class="kicker">Evaluación</span>Examen final de certificación interna</h2>
+        </div>
+
+        <p>
+          Respondé todas las preguntas y verificá tus respuestas. Cada explicación indica la tabla y
+          la página del modelo de datos donde verificar la respuesta.
+        </p>
+
+        <div class="quiz-intro">
+          <div class="stat"><b id="quizTotal">24</b><span>preguntas</span></div>
+          <div class="stat"><b>70%</b><span>mínimo para aprobar</span></div>
+          <div class="stat"><b id="quizPassCount">17</b><span>respuestas correctas necesarias</span></div>
+        </div>
+
+        <div id="quizList"></div>
+
+        <div class="quiz-actions">
+          <button class="btn btn-primary" id="quizSubmit" type="button">Verificar respuestas</button>
+          <button class="btn btn-outline" id="quizReset" type="button">Reintentar examen</button>
+        </div>
+
+        <div class="result" id="quizResult" role="status" aria-live="polite"></div>
+      </section>
+
+      <!-- ===== GLOSARIO ===== -->
+      <section class="section" id="glosario" data-nav-label="Glosario" data-no-mark="true">
+        <div class="section-head">
+          <div class="section-num">&#9776;</div>
+          <h2><span class="kicker">Referencia</span>Glosario operativo</h2>
+        </div>
+        <dl class="glossary" id="glossary"></dl>
+      </section>
+
+      <p class="footer">
+        Capacitación BLC — reconstrucción documental basada en el modelo de datos
+        <code>INSIS_GEN_BLC_V10</code>. Material de uso interno · <span id="year"></span>
+      </p>
+
+    </div>
+  </main>
+</div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
